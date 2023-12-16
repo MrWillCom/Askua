@@ -1,0 +1,22 @@
+$gray-swatch: 'sand';
+$accent-swatch: 'teal';
+
+@import url('@radix-ui/colors/#{$gray-swatch}.css');
+@import url('@radix-ui/colors/#{$gray-swatch}-dark.css');
+@import url('@radix-ui/colors/#{$accent-swatch}.css');
+@import url('@radix-ui/colors/#{$accent-swatch}-dark.css');
+
+:root {
+  @for $i from 1 through 12 {
+    --gray-#{$i}: var(--#{$gray-swatch}-#{$i});
+  }
+  @for $i from 1 through 12 {
+    --accent-#{$i}: var(--#{$accent-swatch}-#{$i});
+  }
+  --accent-9-contrast: #fff;
+}
+
+body {
+  background-color: var(--gray-1);
+  color: var(--gray-12);
+}
