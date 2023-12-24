@@ -8,6 +8,7 @@ const prisma = new PrismaClient()
 const handler = NextAuth({
   secret: process.env.NEXTAUTH_SECRET,
   adapter: PrismaAdapter(prisma),
+  pages: { signIn: '/signin' },
   // pages: {
   // TODO: add custom auth pages
   // https://next-auth.js.org/configuration/pages

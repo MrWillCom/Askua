@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 
 import 'normalize.css/normalize.css'
+import '@radix-ui/themes/styles.css'
 import './globals.scss'
 
 import { Providers } from './providers'
