@@ -13,7 +13,7 @@ export default function Page() {
         className={styles.left}
       >
         <Text weight="medium" size="6">
-          AnonymQ
+          Askua
         </Text>
       </Box>
       <Flex align="center" justify="center" width="100%" p="2">
