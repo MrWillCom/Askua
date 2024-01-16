@@ -7,15 +7,15 @@ import { Theme } from '@radix-ui/themes'
 
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
-      <ThemeProvider attribute="class">
-        <Theme
-          accentColor="mint"
-          grayColor="sand"
-          radius="large"
-          className={styles.fullHeight}
-        >
-          {children}
-        </Theme>
-      </ThemeProvider>
+    <ThemeProvider attribute="class">
+      <Theme
+        accentColor="mint"
+        grayColor="sand"
+        radius="large"
+        className={styles.fullHeight}
+      >
+        {children}
+      </Theme>
+    </ThemeProvider>
   )
 }
