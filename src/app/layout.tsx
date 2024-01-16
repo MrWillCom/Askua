@@ -5,6 +5,7 @@ import '@radix-ui/themes/styles.css'
 import './globals.scss'
 
 import { Providers } from './providers'
+import Nav from '@/components/Nav'
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -19,7 +20,10 @@ export default function RootLayout({
   return (
     <html lang="zh-CN" suppressHydrationWarning>
       <body>
-        <Providers>{children}</Providers>
+        <Providers>
+          <Nav />
+          {children}
+        </Providers>
       </body>
     </html>
   )
