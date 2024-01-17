@@ -56,6 +56,7 @@ const Page: React.FunctionComponent<PageProps> = () => {
       </Container>
     )
   } else if (status == 'loading') {
+    // TODO: add a spinner
     return <Text color="gray">Loading...</Text>
   }
 }

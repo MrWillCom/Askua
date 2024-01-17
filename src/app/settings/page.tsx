@@ -1,7 +1,5 @@
-import { redirect } from 'next/navigation'
+import AccountPage from './account/page'
 
-const Page = () => {
-  redirect('/settings/account')
-}
+const Page = () => <AccountPage />
 
 export default Page

@@ -29,6 +29,11 @@ const Page: React.FunctionComponent<PageProps> = () => {
             <NextLink href="/dashboard">/dashboard</NextLink>
           </Link>
         </li>
+        <li>
+          <Link asChild>
+            <NextLink href="/settings">/settings</NextLink>
+          </Link>
+        </li>
       </ol>
       <Separator my="2" size="4" />
       <Center>

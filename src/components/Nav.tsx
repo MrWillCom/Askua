@@ -15,7 +15,14 @@ const Nav: React.FunctionComponent<NavProps> = () => {
   return (
     <Flex px="2" pl="3" height="8" align="center" justify="between" asChild>
       <nav className={styles.nav}>
-        <Heading size="4" asChild>
+        <Heading
+          size="4"
+          style={{
+            color: 'var(--gray-12)',
+            textDecoration: 'none',
+          }}
+          asChild
+        >
           <Link href="/">Askua</Link>
         </Heading>
         <Flex gap="2">
