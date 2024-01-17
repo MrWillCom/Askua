@@ -28,7 +28,7 @@ const Nav: React.FunctionComponent<NavProps> = () => {
                 </Button>
               </DropdownMenu.Trigger>
               <DropdownMenu.Content align="end">
-                <DropdownMenu.Item disabled asChild>
+                <DropdownMenu.Item asChild>
                   <Link href="/dashboard">仪表板</Link>
                 </DropdownMenu.Item>
                 <DropdownMenu.Item disabled asChild>
