@@ -6,6 +6,7 @@ import './globals.scss'
 
 import { Providers } from './providers'
 import Nav from '@/components/Nav'
+import { Box } from '@radix-ui/themes'
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -22,7 +23,7 @@ export default function RootLayout({
       <body>
         <Providers>
           <Nav />
-          {children}
+          <Box pt="8">{children}</Box>
         </Providers>
       </body>
     </html>

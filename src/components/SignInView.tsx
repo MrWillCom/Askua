@@ -11,6 +11,52 @@ import * as Form from '@radix-ui/react-form'
 import { SessionProvider, signIn, signOut, useSession } from 'next-auth/react'
 import { useState } from 'react'
 
+interface SignOutButtonProps {
+  variant?: 'surface' | 'classic' | 'solid' | 'soft' | 'outline' | 'ghost'
+}
+
+const SignOutButton: React.FunctionComponent<SignOutButtonProps> = ({
+  variant,
+}) => {
+  const [submitDisabled, setSubmitDisabled] = useState(false)
+
+  return (
+    <Popover.Root>
+      <Popover.Trigger>
+        <Button
+          color="red"
+          variant={variant ? variant : 'surface'}
+          disabled={submitDisabled}
+        >
+          {!submitDisabled ? '退出登录' : '正在退出登录...'}
+        </Button>
+      </Popover.Trigger>
+      <Popover.Content>
+        <Flex direction="column" gap="2">
+          <Text as="p">确定退出登录？</Text>
+          <Flex justify="end" gap="2">
+            <Popover.Close>
+              <Button variant="surface" color="gray" disabled={submitDisabled}>
+                取消
+              </Button>
+            </Popover.Close>
+            <Button
+              color="red"
+              disabled={submitDisabled}
+              onClick={() => {
+                setSubmitDisabled(true)
+                signOut()
+              }}
+            >
+              {!submitDisabled ? '退出登录' : '正在退出登录...'}
+            </Button>
+          </Flex>
+        </Flex>
+      </Popover.Content>
+    </Popover.Root>
+  )
+}
+
 interface SignInViewProps {
   className?: string | undefined
 }
@@ -25,39 +71,7 @@ const SignInView: React.FunctionComponent<SignInViewProps> = ({
   return status == 'authenticated' ? (
     <Flex direction="column" gap="4" className={className}>
       <Heading align="center">你已登录</Heading>
-      <Popover.Root>
-        <Popover.Trigger>
-          <Button color="red" variant="surface" disabled={submitDisabled}>
-            {!submitDisabled ? '退出登录' : '正在退出登录...'}
-          </Button>
-        </Popover.Trigger>
-        <Popover.Content>
-          <Flex direction="column" gap="2">
-            <Text>确定退出登录？</Text>
-            <Flex justify="end" gap="2">
-              <Popover.Close>
-                <Button
-                  variant="surface"
-                  color="gray"
-                  disabled={submitDisabled}
-                >
-                  取消
-                </Button>
-              </Popover.Close>
-              <Button
-                color="red"
-                disabled={submitDisabled}
-                onClick={() => {
-                  setSubmitDisabled(true)
-                  signOut()
-                }}
-              >
-                {!submitDisabled ? '退出登录' : '正在退出登录...'}
-              </Button>
-            </Flex>
-          </Flex>
-        </Popover.Content>
-      </Popover.Root>
+      <SignOutButton />
     </Flex>
   ) : (
     <Form.Root
@@ -65,12 +79,12 @@ const SignInView: React.FunctionComponent<SignInViewProps> = ({
       onSubmit={ev => {
         ev.preventDefault()
         setSubmitDisabled(true)
-        signIn('email', { email })
+        signIn('email', { email, callbackUrl: '/dashboard' })
       }}
     >
       <Flex direction="column" gap="2">
         <Heading align="center">登录或创建账户</Heading>
-        <Text size="2" color="gray" align="center">
+        <Text size="2" color="gray" align="center" as="p">
           输入邮箱以登录，未注册则自动创建账户
         </Text>
         <Form.Field name="email">
@@ -108,3 +122,5 @@ function Wrappers(props: SignInViewProps) {
 }
 
 export default Wrappers
+
+export { Wrappers as SignInView, SignOutButton }

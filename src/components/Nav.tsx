@@ -2,8 +2,10 @@
 
 import Link from 'next/link'
 import styles from './Nav.module.scss'
-import { Box, Button, Flex, Heading } from '@radix-ui/themes'
+import { Button, DropdownMenu, Flex, Heading } from '@radix-ui/themes'
 import { SessionProvider, useSession } from 'next-auth/react'
+import { CaretDown } from '@phosphor-icons/react/dist/ssr'
+import { SignOutButton } from './SignInView'
 
 interface NavProps {}
 
@@ -17,12 +19,37 @@ const Nav: React.FunctionComponent<NavProps> = () => {
           <Link href="/">Askua</Link>
         </Heading>
         <Flex gap="2">
-          <Button asChild>
-            <Link href="/signin">创建账户</Link>
-          </Button>
-          <Button variant="surface" asChild>
-            <Link href="/signin">登录</Link>
-          </Button>
+          {status == 'authenticated' ? (
+            <DropdownMenu.Root>
+              <DropdownMenu.Trigger>
+                <Button variant="soft">
+                  {session.user?.name ? session.user.name : session.user?.email}
+                  <CaretDown />
+                </Button>
+              </DropdownMenu.Trigger>
+              <DropdownMenu.Content align="end">
+                <DropdownMenu.Item disabled asChild>
+                  <Link href="/dashboard">仪表板</Link>
+                </DropdownMenu.Item>
+                <DropdownMenu.Item disabled asChild>
+                  <Link href="/settings">设置</Link>
+                </DropdownMenu.Item>
+                <DropdownMenu.Separator />
+                <DropdownMenu.Item asChild>
+                  <SignOutButton variant="outline" />
+                </DropdownMenu.Item>
+              </DropdownMenu.Content>
+            </DropdownMenu.Root>
+          ) : (
+            <>
+              <Button asChild>
+                <Link href="/signin">创建账户</Link>
+              </Button>
+              <Button variant="surface" asChild>
+                <Link href="/signin">登录</Link>
+              </Button>
+            </>
+          )}
         </Flex>
       </nav>
     </Flex>
