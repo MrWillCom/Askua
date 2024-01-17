@@ -3,9 +3,8 @@
 import styles from './page.module.scss'
 import NextLink from 'next/link'
 import { SessionProvider, useSession } from 'next-auth/react'
-import { Heading, Link } from '@radix-ui/themes'
+import { Box, Button, Flex, Heading, Link, Separator } from '@radix-ui/themes'
 import Center from '@/components/Center'
-import DashboardPage from './dashboard/page'
 
 interface PageProps {}
 
@@ -31,13 +30,28 @@ const Page: React.FunctionComponent<PageProps> = () => {
           </Link>
         </li>
       </ol>
-      {status == 'authenticated' ? (
-        <DashboardPage />
-      ) : (
-        <Center>
+      <Separator my="2" size="4" />
+      <Center>
+        <Flex direction="column" gap="2" align="center">
           <Heading>Welcome to Askua.</Heading>
-        </Center>
-      )}
+          <Flex gap="2">
+            {status == 'authenticated' ? (
+              <Button size="3" asChild>
+                <NextLink href="/dashboard">前往仪表板</NextLink>
+              </Button>
+            ) : (
+              <>
+                <Button size="3" asChild>
+                  <NextLink href="/signin">创建账户</NextLink>
+                </Button>
+                <Button variant="surface" size="3" asChild>
+                  <NextLink href="/signin">登录</NextLink>
+                </Button>
+              </>
+            )}
+          </Flex>
+        </Flex>
+      </Center>
     </>
   )
 }

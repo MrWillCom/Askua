@@ -14,7 +14,9 @@ export default function Page() {
             data-accent-color="gray"
           />
           <Heading>检查你的收件箱</Heading>
-          <Text color="gray">登录链接已发送到你的邮箱</Text>
+          <Text color="gray" as="p">
+            登录链接已发送到你的邮箱
+          </Text>
         </Flex>
       </Card>
     </Center>
