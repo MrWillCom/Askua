@@ -31,7 +31,7 @@ const Nav: React.FunctionComponent<NavProps> = () => {
                 <DropdownMenu.Item asChild>
                   <Link href="/dashboard">仪表板</Link>
                 </DropdownMenu.Item>
-                <DropdownMenu.Item disabled asChild>
+                <DropdownMenu.Item asChild>
                   <Link href="/settings">设置</Link>
                 </DropdownMenu.Item>
                 <DropdownMenu.Separator />

@@ -40,8 +40,7 @@ const Page: React.FunctionComponent<PageProps> = () => {
                   你还没有设置名字等个人信息，你可以在设置中检查这些信息。
                 </Text>
                 <Flex gap="2">
-                  {/* TODO: enable after implementing settings page */}
-                  <Button disabled asChild>
+                  <Button asChild>
                     <Link href="/settings">前往设置</Link>
                   </Button>
                   {/* TODO: implement the ignore button */}
