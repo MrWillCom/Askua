@@ -13,6 +13,7 @@ import {
 import { SessionProvider, useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
+import Spinner from '@/components/Spinner'
 
 interface PageProps {}
 
@@ -57,7 +58,7 @@ const Page: React.FunctionComponent<PageProps> = () => {
     )
   } else if (status == 'loading') {
     // TODO: add a spinner
-    return <Text color="gray">Loading...</Text>
+    return <Spinner />
   }
 }
 
