@@ -9,6 +9,7 @@ import {
   Text,
 } from '@radix-ui/themes'
 import {
+  DashboardIcon,
   ExitIcon,
   GearIcon,
   HomeIcon,
@@ -43,6 +44,12 @@ const Navigation: React.FunctionComponent<NavigationProps> = async () => {
         <DropdownMenu.Content variant={signedIn ? 'soft' : 'solid'}>
           {signedIn ? (
             <>
+              <DropdownMenu.Item asChild>
+                <Link href="/">
+                  <DashboardIcon />
+                  Dashboard
+                </Link>
+              </DropdownMenu.Item>
               <DropdownMenu.Item asChild disabled={!session.user?.username}>
                 <Link href={'/u/' + session.user?.username}>
                   <PersonIcon />
