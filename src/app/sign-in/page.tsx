@@ -31,7 +31,10 @@ export default async function SignInPage() {
         <form
           action={async formData => {
             'use server'
-            await signIn('resend', formData)
+            await signIn('resend', {
+              email: formData.get('email'),
+              redirectTo: '/',
+            })
           }}
           className={styles.form}
         >
