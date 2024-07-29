@@ -16,7 +16,7 @@ const Container: React.FunctionComponent<ContainerProps> = ({
     <Box
       className={styles.container + (centerChild ? ' ' + styles.center : '')}
     >
-      {children}
+      <Box className={styles.inner}>{children}</Box>
     </Box>
   )
 }

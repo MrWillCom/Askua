@@ -1,13 +1,17 @@
 .container {
-  margin-top: var(--navigation-height);
+  padding-top: var(--navigation-height);
   margin-left: auto;
   margin-right: auto;
   width: 100%;
-  max-width: var(--container-4);
+  max-width: var(--container-3);
 
   &.center {
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+
+  .inner {
+    margin: 0 var(--space-4);
   }
 }
