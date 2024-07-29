@@ -25,7 +25,7 @@ export const VerificationRequestEmail = ({
       <Head>
         <Font fontFamily="system-ui" fallbackFontFamily="sans-serif" />
       </Head>
-      <Preview>Click the button to sign in to Askua ({host}).</Preview>
+      <Preview>Tap the button to sign in to Askua ({host}).</Preview>
       <Body>
         <Container>
           <Heading>Sign in to Askua</Heading>
