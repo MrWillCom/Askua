@@ -62,7 +62,7 @@ const Navigation: React.FunctionComponent<NavigationProps> = async () => {
                 }}
               >
                 <DropdownMenu.Item color="red" asChild>
-                  <button type="submit">
+                  <button type="submit" className={styles.signOutFormButton}>
                     <ExitIcon />
                     Sign out
                   </button>
