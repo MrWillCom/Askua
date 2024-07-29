@@ -43,4 +43,14 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     }),
   ],
   pages: { signIn: '/sign-in' },
+  callbacks: {
+    authorized({ request, auth }) {
+      const { pathname } = request.nextUrl
+
+      const isProtected = ['/settings'].some(v => pathname.startsWith(v))
+      if (isProtected) return !!auth
+
+      return true
+    },
+  },
 })
