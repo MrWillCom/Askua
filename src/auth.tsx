@@ -4,8 +4,13 @@ import { PrismaClient } from '@prisma/client'
 import Resend from 'next-auth/providers/resend'
 import { render } from '@react-email/render'
 import VerificationRequestEmail from './emails/VerificationRequestEmail'
+import { Pool } from 'pg'
+import { PrismaPg } from '@prisma/adapter-pg'
 
-const prisma = new PrismaClient()
+const connectionString = `${process.env.DATABASE_URL}`
+const pool = new Pool({ connectionString })
+const adapter = new PrismaPg(pool)
+const prisma = new PrismaClient({ adapter })
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   adapter: PrismaAdapter(prisma),
