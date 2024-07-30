@@ -2,34 +2,15 @@
 
 import styles from './page.module.scss'
 
-import axios from 'axios'
 import Container from '@/components/Container'
-import useSWR from 'swr'
 import Center from '@/components/Center'
-import { Card, Flex, Spinner, Text, Link } from '@radix-ui/themes'
+import { Card, Flex, Spinner, Text, Link, Badge } from '@radix-ui/themes'
 import NextLink from 'next/link'
-import moment from 'moment'
-
-const fetcher = (url: string) => axios.get(url).then(res => res.data)
-
-interface Box {
-  id: string
-  identifier: string
-  name: string
-  createdAt: string
-  updatedAt: string
-  questions: { id: string }[]
-}
+import useBoxList from '@/hooks/useBoxList'
+import cardProps from '@/props/cardProps'
 
 export default function Home() {
-  const {
-    data,
-    error,
-    isLoading,
-  }: { data: Box[]; error: Error | undefined; isLoading: boolean } = useSWR(
-    '/api/v1/box/list',
-    fetcher,
-  )
+  const { data, error, isLoading } = useBoxList()
 
   return (
     <Container>
@@ -40,12 +21,15 @@ export default function Home() {
           <Spinner />
         </Center>
       ) : (
-        data.map(b => (
-          <Card key={b.id} my="4">
+        data!.map(b => (
+          <Card key={b.id} {...cardProps}>
             <Flex justify="between" align="center">
-              <Link size="4" asChild>
-                <NextLink href={'/box/' + b.identifier}>{b.name}</NextLink>
-              </Link>
+              <Flex align="center" gap="1">
+                <Link size="4" asChild>
+                  <NextLink href={'/box/' + b.identifier}>{b.name}</NextLink>
+                </Link>
+                <Badge color="green">Open</Badge>
+              </Flex>
               <Text color="gray" size="2">
                 {b.questions.length === 0 ? 'No' : b.questions.length} question
                 {b.questions.length === 1 ? '' : 's'}

@@ -12,7 +12,9 @@ const Container: React.FunctionComponent<ContainerProps> = ({
   className,
 }) => {
   return (
-    <RadixContainer className={styles.container + (className ? ' ' + className : '')}>
+    <RadixContainer
+      className={styles.container + (className ? ' ' + className : '')}
+    >
       {children}
     </RadixContainer>
   )
