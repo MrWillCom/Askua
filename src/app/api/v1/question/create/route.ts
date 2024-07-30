@@ -31,7 +31,7 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     if ((error as any)?.code === 'P2003') {
       return Response.json(
-        { error: 'There isn\'t any Box matching the given `boxId`.' },
+        { error: "There isn't any Box matching the given `boxId`." },
         { status: 400 },
       )
     }
