@@ -13,32 +13,24 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id            String    @id @default(cuid())
-  email         String    @unique
-  emailVerified DateTime?
-  sessions      Session[]
+model Box {
+  id         String     @id @unique @default(cuid())
+  identifier String     @unique
+  name       String?
+  questions  Question[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
-model Session {
-  sessionToken        String               @id @unique @db.Char(36) // UUID v4
-  expires             DateTime
-  userId              String
-  user                User                 @relation(fields: [userId], references: [id], onDelete: Cascade)
-  verificationRequest VerificationRequest?
+model Question {
+  id        String    @id @unique @default(cuid())
+  content   String
+  reply     String?
+  repliedAt DateTime?
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
-model VerificationRequest {
-  code         String   @unique @db.Char(8) // example: A4B3C2D1 (shown as A4B3-C2D1)
-  expires      DateTime
-  sessionToken String   @unique
-  session      Session  @relation(fields: [sessionToken], references: [sessionToken])
+  boxId String
+  box   Box    @relation(fields: [boxId], references: [id])
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
