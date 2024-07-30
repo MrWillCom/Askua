@@ -19,13 +19,6 @@ export async function GET(request: NextRequest) {
 
     return Response.json(questions, { status: 200 })
   } catch (error) {
-    if ((error as any)?.code === 'P2003') {
-      return Response.json(
-        { error: "There isn't any Box matching the given `boxId`." },
-        { status: 400 },
-      )
-    }
-
     console.error(error)
     return Response.json(
       { error: 'Unhandled error happened on server-side.' },
