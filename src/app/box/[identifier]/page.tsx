@@ -19,7 +19,7 @@ import useBox from '@/hooks/useBox'
 import moment from 'moment'
 import cardProps from '@/props/cardProps'
 import axios from 'axios'
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { toast } from 'sonner'
 
 export default function Page({ params }: { params: { identifier: string } }) {
@@ -37,6 +37,7 @@ export default function Page({ params }: { params: { identifier: string } }) {
   } = useQuestionList(box?.id ?? null, typeof box?.id === 'string')
 
   const [askButtonLoading, setAskButtonLoading] = useState(false)
+  const askFormRef = useRef<HTMLFormElement>(null)
 
   return (
     <Container>
@@ -61,10 +62,12 @@ export default function Page({ params }: { params: { identifier: string } }) {
                     .post('/api/v1/question/create', formData)
                     .then(({ data }) => {
                       toast.success('Question delivered.')
+                      askFormRef.current!.reset()
                       useQuestionListMutate([data, ...questions!])
                       setAskButtonLoading(false)
                     })
                 }}
+                ref={askFormRef}
               >
                 <Flex direction="column">
                   <TextArea
