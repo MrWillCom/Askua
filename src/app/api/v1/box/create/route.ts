@@ -4,9 +4,7 @@ import prisma from '@/utils/db'
 export async function POST(request: NextRequest) {
   const formData = await request.formData()
   const identifier = formData.get('identifier')
-  const name = (
-    typeof formData.get('name') === 'string' ? formData.get('name') : null
-  ) as string | null
+  const name = formData.get('name')
 
   if (typeof identifier !== 'string') {
     return Response.json(
@@ -22,24 +20,32 @@ export async function POST(request: NextRequest) {
     )
   }
 
-  try {
-    const box = await prisma.box.create({
-      data: { identifier, name },
-      include: { questions: true },
-    })
+  if (typeof name === 'string' || name === null) {
+    try {
+      const box = await prisma.box.create({
+        data: { identifier, name },
+        include: { questions: true },
+      })
 
-    return Response.json(box, { status: 200 })
-  } catch (error) {
-    if ((error as any)?.code === 'P2002') {
+      return Response.json(box, { status: 200 })
+    } catch (error) {
+      if ((error as any)?.code === 'P2002') {
+        return Response.json(
+          { error: 'Given `identifier` is already in use.' },
+          { status: 400 },
+        )
+      }
+
+      console.error(error)
       return Response.json(
-        { error: 'Given `identifier` is already in use.' },
-        { status: 400 },
+        { error: 'Unhandled error happened on server-side.' },
+        { status: 500 },
       )
     }
-
+  } else {
     return Response.json(
-      { error: 'Unhandled error happened on server-side.' },
-      { status: 500 },
+      { error: 'Given `name` is not a string.' },
+      { status: 400 },
     )
   }
 }
