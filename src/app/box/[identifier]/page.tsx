@@ -48,10 +48,8 @@ export default function Page({ params }: { params: { identifier: string } }) {
           <Spinner />
         </Center>
       ) : (
-        <>
-          <Heading as="h1" size="6">
-            {box?.name}
-          </Heading>
+        <Flex direction="column" gap="4">
+          <Heading as="h1">{box?.name}</Heading>
           <Card {...cardProps}>
             <Inset clip="padding-box">
               <form
@@ -114,7 +112,7 @@ export default function Page({ params }: { params: { identifier: string } }) {
               </Flex>
             </Card>
           ))}
-        </>
+        </Flex>
       )}
     </Container>
   )

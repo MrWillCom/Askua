@@ -4,7 +4,15 @@ import styles from './page.module.scss'
 
 import Container from '@/components/Container'
 import Center from '@/components/Center'
-import { Card, Flex, Spinner, Text, Link, Badge } from '@radix-ui/themes'
+import {
+  Card,
+  Flex,
+  Spinner,
+  Text,
+  Link,
+  Badge,
+  Heading,
+} from '@radix-ui/themes'
 import NextLink from 'next/link'
 import useBoxList from '@/hooks/useBoxList'
 import cardProps from '@/props/cardProps'
@@ -21,22 +29,26 @@ export default function Home() {
           <Spinner />
         </Center>
       ) : (
-        data!.map(b => (
-          <Card key={b.id} {...cardProps}>
-            <Flex justify="between" align="center">
-              <Flex align="center" gap="1">
-                <Link size="4" asChild>
-                  <NextLink href={'/box/' + b.identifier}>{b.name}</NextLink>
-                </Link>
-                <Badge color="green">Open</Badge>
+        <Flex direction="column" gap="4">
+          <Heading as="h1">Boxes</Heading>
+          {data!.map(b => (
+            <Card key={b.id} {...cardProps}>
+              <Flex justify="between" align="center">
+                <Flex align="center" gap="1">
+                  <Link size="4" asChild>
+                    <NextLink href={'/box/' + b.identifier}>{b.name}</NextLink>
+                  </Link>
+                  <Badge color="green">Open</Badge>
+                </Flex>
+                <Text color="gray" size="2">
+                  {b.questions.length === 0 ? 'No' : b.questions.length}{' '}
+                  question
+                  {b.questions.length === 1 ? '' : 's'}
+                </Text>
               </Flex>
-              <Text color="gray" size="2">
-                {b.questions.length === 0 ? 'No' : b.questions.length} question
-                {b.questions.length === 1 ? '' : 's'}
-              </Text>
-            </Flex>
-          </Card>
-        ))
+            </Card>
+          ))}
+        </Flex>
       )}
     </Container>
   )
