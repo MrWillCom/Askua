@@ -1,4 +1,9 @@
 import type { Metadata } from 'next'
+import { ThemeProvider } from 'next-themes'
+import { Theme } from '@radix-ui/themes'
+
+import 'modern-normalize/modern-normalize.css'
+import '@radix-ui/themes/styles.css'
 import './globals.scss'
 
 export const metadata: Metadata = {
@@ -12,8 +17,12 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en">
-      <body>{children}</body>
+    <html lang="en" suppressHydrationWarning>
+      <body>
+        <ThemeProvider attribute="class">
+          <Theme>{children}</Theme>
+        </ThemeProvider>
+      </body>
     </html>
   )
 }
