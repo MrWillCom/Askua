@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { ThemeProvider } from 'next-themes'
 import { Theme } from '@radix-ui/themes'
+import { Toaster, toast } from 'sonner'
 
 import 'modern-normalize/modern-normalize.css'
 import '@radix-ui/themes/styles.css'
@@ -22,6 +23,7 @@ export default function RootLayout({
         <ThemeProvider attribute="class">
           <Theme grayColor="slate" accentColor="sky" radius="large">
             {children}
+            <Toaster position="top-center" richColors />
           </Theme>
         </ThemeProvider>
       </body>

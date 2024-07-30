@@ -13,12 +13,12 @@ interface Question {
 }
 
 function useQuestionList(boxId: string | null, shouldFetch: boolean) {
-  const { data, error, isLoading } = useSWR<Question[], AxiosError>(
+  const { data, error, isLoading, mutate } = useSWR<Question[], AxiosError>(
     shouldFetch ? '/api/v1/question/list?boxId=' + boxId : null,
     fetcher,
   )
 
-  return { data, isLoading, error }
+  return { data, error, isLoading, mutate }
 }
 
 export default useQuestionList

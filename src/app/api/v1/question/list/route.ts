@@ -15,6 +15,7 @@ export async function GET(request: NextRequest) {
   try {
     const questions = await prisma.question.findMany({
       where: { boxId: boxId as string },
+      orderBy: { updatedAt: 'desc' },
     })
 
     return Response.json(questions, { status: 200 })
