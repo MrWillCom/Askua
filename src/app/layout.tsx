@@ -20,7 +20,9 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body>
         <ThemeProvider attribute="class">
-          <Theme>{children}</Theme>
+          <Theme grayColor="slate" accentColor="sky" radius="large">
+            {children}
+          </Theme>
         </ThemeProvider>
       </body>
     </html>
