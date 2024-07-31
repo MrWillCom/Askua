@@ -23,12 +23,15 @@ import { toast } from 'sonner'
 import axios from 'axios'
 import { useSWRConfig } from 'swr'
 import useSecret from '@/hooks/useSecret'
+import useBoxList from '@/hooks/useBoxList'
+import AutoSpinnerView from '@/components/AutoSpinnerView'
 
 export default function Page() {
   const [createBoxIdentifier, setCreateBoxIdentifier] = useState('')
   const [submitButtonIsLoading, setSubmitButtonIsLoading] = useState(false)
   const { mutate } = useSWRConfig()
   const [secret] = useSecret()
+  const { data, error, isLoading } = useBoxList()
 
   return (
     <Container>
@@ -165,7 +168,9 @@ export default function Page() {
               </Flow>
             </Dialog.Content>
           </Dialog.Root>
-          <BoxList admin />
+          <AutoSpinnerView error={error} isLoading={isLoading}>
+            <BoxList admin data={data!} />
+          </AutoSpinnerView>
         </AuthorizedView>
       </Flow>
     </Container>
