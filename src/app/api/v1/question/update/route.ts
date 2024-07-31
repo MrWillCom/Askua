@@ -9,6 +9,9 @@ export async function PUT(request: NextRequest) {
     const id = formData.get('id')
     const content = formData.get('content')
     const reply = formData.get('reply')
+    let _public: string | boolean | null = formData.get('public') as
+      | string
+      | null
 
     if (typeof id === 'string' ? !isCuid(id) : true) {
       return Response.json({ error: 'Given `id` is invalid.' }, { status: 400 })
@@ -30,6 +33,17 @@ export async function PUT(request: NextRequest) {
           modifications = { ...modifications, repliedAt: new Date() }
         }
         modifications = { ...modifications, reply }
+      }
+
+      if (_public === 'true') {
+        _public = true
+      } else if (_public === 'false') {
+        _public = false
+      } else if (_public !== null && _public.length > 0) {
+        return Response.json(
+          { error: 'Given `public` is invalid.' },
+          { status: 400 },
+        )
       }
 
       const newQuestion = await prisma.question.update({

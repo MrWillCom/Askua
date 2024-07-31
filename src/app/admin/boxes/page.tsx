@@ -31,7 +31,7 @@ export default function Page() {
   const [submitButtonIsLoading, setSubmitButtonIsLoading] = useState(false)
   const { mutate } = useSWRConfig()
   const [secret] = useSecret()
-  const { data, error, isLoading } = useBoxList()
+  const { data, error, isLoading } = useBoxList({ admin: true })
 
   return (
     <Container>

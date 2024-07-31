@@ -22,14 +22,22 @@ export async function POST(request: NextRequest) {
   }
 
   try {
-    const question = await prisma.question.create({
-      data: { content, boxId: boxId as string },
-      include: { box: true },
+    const box = await prisma.box.findUniqueOrThrow({
+      where: { id: boxId as string },
     })
 
-    return Response.json(question, { status: 200 })
+    if (box.open === false) {
+      return Response.json({ error: 'The box is closed.' }, { status: 400 })
+    } else {
+      const question = await prisma.question.create({
+        data: { content, boxId: boxId as string },
+        include: { box: true },
+      })
+
+      return Response.json(question, { status: 200 })
+    }
   } catch (error) {
-    if ((error as any)?.code === 'P2003') {
+    if ((error as any)?.code === 'P2003' || (error as any)?.code === 'P2025') {
       return Response.json(
         { error: "There isn't any Box matching the given `boxId`." },
         { status: 400 },

@@ -23,6 +23,11 @@ export default function Page() {
               <NextLink href="/admin/boxes">Boxes</NextLink>
             </Link>
           </li>
+          <li>
+            <Link asChild>
+              <NextLink href="/admin/questions">Questions</NextLink>
+            </Link>
+          </li>
         </ul>
       </Flow>
     </Container>
