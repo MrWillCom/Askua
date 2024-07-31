@@ -90,6 +90,7 @@ const BoxList: React.FunctionComponent<BoxListProps> = ({ admin, data }) => {
                                 ? 'true'
                                 : 'false',
                             )
+
                             try {
                               const response = await axios.put(
                                 '/api/v1/box/update',
