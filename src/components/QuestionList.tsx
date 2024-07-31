@@ -163,9 +163,82 @@ const QuestionList: React.FunctionComponent<QuestionListProps> = ({
                   </Flow>
                 </Dialog.Content>
               </Dialog.Root>
-              <Button variant="soft" size="1" color="red" disabled>
-                <TrashIcon /> Delete
-              </Button>
+              <Dialog.Root>
+                <Dialog.Trigger>
+                  <Button variant="soft" size="1" color="red">
+                    <TrashIcon /> Delete
+                  </Button>
+                </Dialog.Trigger>
+                <Dialog.Content maxWidth="450px" size="2">
+                  <Dialog.Title>Delete a Question</Dialog.Title>
+                  <Dialog.Description color="gray" size="2">
+                    Deleting a question is permanent.
+                  </Dialog.Description>
+                  <Flow mt="1" asChild>
+                    <form
+                      action={formData => {
+                        toast.promise(
+                          async () => {
+                            setSubmitButtonIsLoading(true)
+                            try {
+                              const response = await axios.delete(
+                                '/api/v1/question/delete?' +
+                                  new URLSearchParams({
+                                    id: q.id,
+                                  }).toString(),
+                                {
+                                  headers: {
+                                    Authorization: 'Bearer ' + secret,
+                                  },
+                                },
+                              )
+                              mutate(key =>
+                                (key as string).startsWith(
+                                  '/api/v1/question/list',
+                                ),
+                              )
+                              return response
+                            } finally {
+                              setSubmitButtonIsLoading(false)
+                            }
+                          },
+                          {
+                            loading: 'Deleting question...',
+                            success: 'Question deleted',
+                            error: err => {
+                              return (
+                                err?.response?.data?.error ??
+                                'Failed to delete question'
+                              )
+                            },
+                          },
+                        )
+                      }}
+                    >
+                      <Flex gap="2" justify="end">
+                        <Dialog.Close>
+                          <Button
+                            variant="soft"
+                            type="button"
+                            disabled={submitButtonIsLoading}
+                          >
+                            Cancel
+                          </Button>
+                        </Dialog.Close>
+                        <Dialog.Close>
+                          <Button
+                            color="red"
+                            type="submit"
+                            loading={submitButtonIsLoading}
+                          >
+                            Delete
+                          </Button>
+                        </Dialog.Close>
+                      </Flex>
+                    </form>
+                  </Flow>
+                </Dialog.Content>
+              </Dialog.Root>
             </Flex>
           </>
         ) : null}
