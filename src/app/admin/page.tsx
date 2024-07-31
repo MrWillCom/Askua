@@ -1,7 +1,5 @@
 'use client'
 
-import styles from './page.module.scss'
-
 import Container from '@/components/Container'
 import Flow from '@/components/Flow'
 import { Heading, Link } from '@radix-ui/themes'

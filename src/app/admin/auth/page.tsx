@@ -1,7 +1,5 @@
 'use client'
 
-import styles from './page.module.scss'
-
 import Container from '@/components/Container'
 import Flow from '@/components/Flow'
 import useAuthorized from '@/hooks/useAuthorized'
@@ -72,7 +70,7 @@ export default function Page() {
               }}
             />
             <Flex gap="2">
-              <Button type="submit" className={styles.saveButton}>
+              <Button type="submit">
                 <CheckIcon /> Save
               </Button>
               <IconButton

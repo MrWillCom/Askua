@@ -1,7 +1,5 @@
 'use client'
 
-import styles from './page.module.scss'
-
 import Container from '@/components/Container'
 import Flow from '@/components/Flow'
 import { Heading, Select } from '@radix-ui/themes'
@@ -39,7 +37,7 @@ export default function Page() {
     <Container>
       <Flow>
         <Heading as="h1">Manage Questions</Heading>
-        <AuthorizedView message='manage questions'>
+        <AuthorizedView message="manage questions">
           <Select.Root
             size="3"
             value={filterValue}
