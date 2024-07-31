@@ -1,6 +1,7 @@
 import useSWR from 'swr'
-import fetcher from '@/utils/fetcher'
+import { getFetcher } from '@/utils/fetcher'
 import { AxiosError } from 'axios'
+import useSecret from './useSecret'
 
 interface Question {
   id: string
@@ -20,12 +21,15 @@ interface Filter {
 
 interface Config {
   shouldFetch?: boolean
+  admin?: boolean
 }
 
 function useQuestionList(
   { boxId, isReplied }: Filter | undefined = {},
-  { shouldFetch }: Config = {},
+  { shouldFetch, admin }: Config = {},
 ) {
+  const [secret] = admin ? useSecret() : [null]
+
   const { data, error, isLoading, mutate } = useSWR<Question[], AxiosError>(
     (typeof shouldFetch === 'boolean' ? shouldFetch : true)
       ? '/api/v1/question/list?' +
@@ -35,7 +39,7 @@ function useQuestionList(
               typeof isReplied === 'boolean' ? isReplied.toString() : '',
           })
       : null,
-    fetcher,
+    getFetcher(secret ? { secret } : undefined),
   )
 
   return { data, error, isLoading, mutate }

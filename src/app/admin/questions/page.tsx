@@ -17,17 +17,20 @@ const Page = () => {
     data: questions,
     error: useQuestionListError,
     isLoading: useQuestionListIsLoading,
-  } = useQuestionList({
-    isReplied:
-      filterValue === 'replies:not-replied'
-        ? false
-        : filterValue === 'replies:replied'
-          ? true
-          : undefined,
-    boxId: filterValue.startsWith('boxes:')
-      ? filterValue.split('boxes:')[1]
-      : undefined,
-  })
+  } = useQuestionList(
+    {
+      isReplied:
+        filterValue === 'replies:not-replied'
+          ? false
+          : filterValue === 'replies:replied'
+            ? true
+            : undefined,
+      boxId: filterValue.startsWith('boxes:')
+        ? filterValue.split('boxes:')[1]
+        : undefined,
+    },
+    { admin: true },
+  )
   const {
     data: boxes,
     error: useBoxListError,

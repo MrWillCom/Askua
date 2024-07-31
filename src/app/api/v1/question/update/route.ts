@@ -46,6 +46,10 @@ export async function PUT(request: NextRequest) {
         )
       }
 
+      if (typeof _public === 'boolean') {
+        modifications = { ...modifications, public: _public }
+      }
+
       const newQuestion = await prisma.question.update({
         where: { id: oldQuestion.id },
         data: modifications,

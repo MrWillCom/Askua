@@ -56,7 +56,11 @@ const QuestionList: React.FunctionComponent<QuestionListProps> = ({
         ) : null}
         {admin ? (
           <>
-            {!q.public ? <Badge color="gray">Private</Badge> : null}
+            {!q.public ? (
+              <Flex align="center" gap="1">
+                <Badge color="gray">Private</Badge>
+              </Flex>
+            ) : null}
             <Flex gap="1">
               <Dialog.Root>
                 <Dialog.Trigger>
