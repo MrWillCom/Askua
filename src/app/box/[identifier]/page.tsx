@@ -21,6 +21,7 @@ import cardProps from '@/props/cardProps'
 import axios from 'axios'
 import { useState, useRef } from 'react'
 import { toast } from 'sonner'
+import Flow from '@/components/Flow'
 
 export default function Page({ params }: { params: { identifier: string } }) {
   const {
@@ -48,7 +49,7 @@ export default function Page({ params }: { params: { identifier: string } }) {
           <Spinner />
         </Center>
       ) : (
-        <Flex direction="column" gap="4">
+        <Flow>
           <Heading as="h1">{box?.name}</Heading>
           <Card {...cardProps}>
             <Inset clip="padding-box">
@@ -112,7 +113,7 @@ export default function Page({ params }: { params: { identifier: string } }) {
               </Flex>
             </Card>
           ))}
-        </Flex>
+        </Flow>
       )}
     </Container>
   )

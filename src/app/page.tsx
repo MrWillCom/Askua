@@ -16,6 +16,7 @@ import {
 import NextLink from 'next/link'
 import useBoxList from '@/hooks/useBoxList'
 import cardProps from '@/props/cardProps'
+import Flow from '@/components/Flow'
 
 export default function Home() {
   const { data, error, isLoading } = useBoxList()
@@ -29,7 +30,7 @@ export default function Home() {
           <Spinner />
         </Center>
       ) : (
-        <Flex direction="column" gap="4">
+        <Flow>
           <Heading as="h1">Boxes</Heading>
           {data!.map(b => (
             <Card key={b.id} {...cardProps}>
@@ -48,7 +49,7 @@ export default function Home() {
               </Flex>
             </Card>
           ))}
-        </Flex>
+        </Flow>
       )}
     </Container>
   )

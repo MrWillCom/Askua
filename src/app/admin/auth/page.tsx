@@ -3,6 +3,7 @@
 import styles from './page.module.scss'
 
 import Container from '@/components/Container'
+import Flow from '@/components/Flow'
 import useAuthorized from '@/hooks/useAuthorized'
 import useSecret from '@/hooks/useSecret'
 import { CheckIcon, EyeClosedIcon, EyeOpenIcon } from '@radix-ui/react-icons'
@@ -27,7 +28,7 @@ export default function Page() {
 
   return (
     <Container>
-      <Flex direction="column" gap="4">
+      <Flow>
         <Heading as="h1">Auth</Heading>
         <Flex direction="column" gap="2" asChild>
           <form
@@ -86,7 +87,7 @@ export default function Page() {
             </Flex>
           </form>
         </Flex>
-      </Flex>
+      </Flow>
     </Container>
   )
 }
