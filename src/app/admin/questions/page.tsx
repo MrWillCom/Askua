@@ -9,8 +9,9 @@ import useBoxList from '@/hooks/useBoxList'
 import AutoSpinnerView from '@/components/AutoSpinnerView'
 import QuestionList from '@/components/QuestionList'
 import useQuestionList from '@/hooks/useQuestionList'
+import noSsr from '@/utils/noSsr'
 
-export default function Page() {
+const Page = () => {
   const [filterValue, setFilterValue] = useState('replies:not-replied')
   const {
     data: questions,
@@ -79,3 +80,5 @@ export default function Page() {
     </Container>
   )
 }
+
+export default noSsr(Page)

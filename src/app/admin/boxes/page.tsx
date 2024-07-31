@@ -23,8 +23,9 @@ import { useSWRConfig } from 'swr'
 import useSecret from '@/hooks/useSecret'
 import useBoxList from '@/hooks/useBoxList'
 import AutoSpinnerView from '@/components/AutoSpinnerView'
+import noSsr from '@/utils/noSsr'
 
-export default function Page() {
+const Page = () => {
   const [createBoxIdentifier, setCreateBoxIdentifier] = useState('')
   const [submitButtonIsLoading, setSubmitButtonIsLoading] = useState(false)
   const { mutate } = useSWRConfig()
@@ -174,3 +175,5 @@ export default function Page() {
     </Container>
   )
 }
+
+export default noSsr(Page)

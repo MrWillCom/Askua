@@ -4,6 +4,7 @@ import Container from '@/components/Container'
 import Flow from '@/components/Flow'
 import useAuthorized from '@/hooks/useAuthorized'
 import useSecret from '@/hooks/useSecret'
+import noSsr from '@/utils/noSsr'
 import { CheckIcon, EyeClosedIcon, EyeOpenIcon } from '@radix-ui/react-icons'
 import {
   Badge,
@@ -18,7 +19,7 @@ import axios from 'axios'
 import { useState } from 'react'
 import { toast } from 'sonner'
 
-export default function Page() {
+const Page = () => {
   const [hideSecret, setHideSecret] = useState(true)
   const [secret, setSecret] = useSecret()
   const [inputSecret, setInputSecret] = useState(secret ?? '')
@@ -89,3 +90,5 @@ export default function Page() {
     </Container>
   )
 }
+
+export default noSsr(Page)
