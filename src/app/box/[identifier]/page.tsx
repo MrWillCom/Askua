@@ -59,7 +59,7 @@ export default function Page({ params }: { params: { identifier: string } }) {
                   axios
                     .post('/api/v1/question/create', formData)
                     .then(({ data }) => {
-                      toast.success('Question delivered.')
+                      toast.success('Question delivered')
                       askFormRef.current!.reset()
                       useQuestionListMutate([data, ...questions!])
                       setAskButtonLoading(false)
