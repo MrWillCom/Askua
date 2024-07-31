@@ -31,6 +31,7 @@ model Question {
   content   String
   reply     String?
   repliedAt DateTime?
+  public    Boolean   @default(true)
 
   boxId String
   box   Box    @relation(fields: [boxId], references: [id])
