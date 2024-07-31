@@ -67,7 +67,7 @@ export async function PUT(request: NextRequest) {
       const newBox = await prisma.box.update({
         where: {
           id: id ?? undefined,
-          identifier: identifier ?? undefined,
+          identifier: !id ? (identifier ?? undefined) : undefined,
         } as Prisma.BoxWhereUniqueInput,
         data: modifications,
         include: {
