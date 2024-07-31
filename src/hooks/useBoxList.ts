@@ -10,8 +10,8 @@ interface Box {
   createdAt: string
   updatedAt: string
   questions: { id: string }[]
-  open: string
-  public: string
+  open: boolean
+  public: boolean
   description?: string
 }
 
