@@ -2,6 +2,7 @@ import { NextRequest } from 'next/server'
 import prisma from '@/utils/db'
 import { isCuid } from '@paralleldrive/cuid2'
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library'
+import isAuthorized, { unauthorizedResponse } from '@/utils/isAuthorized'
 
 export async function GET(request: NextRequest) {
   const searchParams = new URL(request.url).searchParams
@@ -25,6 +26,10 @@ export async function GET(request: NextRequest) {
         questions: { select: { id: true }, orderBy: { createdAt: 'desc' } },
       },
     })
+
+    if (box.public === false && isAuthorized(request) === false) {
+      return unauthorizedResponse
+    }
 
     return Response.json(box, { status: 200 })
   } catch (error) {

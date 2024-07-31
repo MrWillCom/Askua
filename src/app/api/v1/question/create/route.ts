@@ -1,9 +1,11 @@
 import { NextRequest } from 'next/server'
 import prisma from '@/utils/db'
 import { isCuid } from '@paralleldrive/cuid2'
+import isAuthorized, { unauthorizedResponse } from '@/utils/isAuthorized'
 
 export async function POST(request: NextRequest) {
-  const formData = await request.formData()
+  if (isAuthorized(request)) {
+    const formData = await request.formData()
   const content = formData.get('content')
   const boxId = formData.get('boxId')
 
@@ -49,5 +51,8 @@ export async function POST(request: NextRequest) {
       { error: 'Unhandled error happened on server-side.' },
       { status: 500 },
     )
+  }
+  } else {
+    return unauthorizedResponse
   }
 }
