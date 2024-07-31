@@ -1,6 +1,7 @@
 import useAuthorized from '@/hooks/useAuthorized'
 import Center from '@/components/Center'
-import { Text } from '@radix-ui/themes'
+import { Link, Text } from '@radix-ui/themes'
+import NextLink from 'next/link'
 
 interface AuthorizedViewProps {
   children?: React.ReactNode
@@ -18,7 +19,11 @@ const AuthorizedView: React.FC<AuthorizedViewProps> = ({
   ) : (
     <Center>
       <Text color="gray">
-        You need to be authorized{message ? <>to {message}.</> : '.'}
+        You need to be{' '}
+        <Link asChild>
+          <NextLink href="/admin/auth">authorized</NextLink>
+        </Link>
+        {message ? <> to {message}.</> : '.'}
       </Text>
     </Center>
   )

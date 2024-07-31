@@ -37,7 +37,7 @@ export default function Page() {
     <Container>
       <Flow>
         <Heading as="h1">Manage Boxes</Heading>
-        <AuthorizedView>
+        <AuthorizedView message="manage boxes">
           <Dialog.Root
             onOpenChange={open => {
               if (!open) {
