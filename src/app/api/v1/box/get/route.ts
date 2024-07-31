@@ -21,6 +21,9 @@ export async function GET(request: NextRequest) {
   try {
     const box = await prisma.box.findUniqueOrThrow({
       where: { id: id ?? undefined, identifier: identifier ?? undefined },
+      include: {
+        questions: { select: { id: true }, orderBy: { createdAt: 'desc' } },
+      },
     })
 
     return Response.json(box, { status: 200 })

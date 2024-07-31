@@ -1,35 +1,37 @@
 import { NextRequest } from 'next/server'
 import prisma from '@/utils/db'
 import { isAuthorized, unauthorizedResponse } from '@/utils/isAuthorized'
+import { isCuid } from '@paralleldrive/cuid2'
+import type { Prisma } from '@prisma/client'
 
-export async function POST(request: NextRequest) {
+export async function PUT(request: NextRequest) {
   if (isAuthorized(request)) {
     const formData = await request.formData()
+    const id = formData.get('id')
     const identifier = formData.get('identifier')
     const name = formData.get('name')
+    let open = formData.get('open')
+    let _public = formData.get('public')
     const description = formData.get('description')
-    let open: FormDataEntryValue | null | boolean = formData.get('open')
-    let _public: FormDataEntryValue | null | boolean = formData.get('public')
 
-    if (typeof identifier !== 'string') {
+    if (
+      (typeof id === 'string' ? !isCuid(id) : true) &&
+      typeof identifier !== 'string'
+    ) {
       return Response.json(
-        { error: 'Given `identifier` is not a string.' },
+        { error: 'Both `id` and `identifier` are invalid.' },
         { status: 400 },
       )
     }
 
-    if (/[a-zA-Z0-9_-]+/g.test(identifier) === false) {
-      return Response.json(
-        { error: 'Given `identifier` is not valid.' },
-        { status: 400 },
-      )
+    let modifications = {}
+
+    if (typeof identifier === 'string' && /[a-zA-Z0-9_-]+/g.test(identifier)) {
+      modifications = { ...modifications, identifier }
     }
 
-    if (typeof name !== 'string') {
-      return Response.json(
-        { error: 'Given `name` is not a string.' },
-        { status: 400 },
-      )
+    if (typeof name === 'string') {
+      modifications = { ...modifications, name }
     }
 
     if (open !== null) {
@@ -39,7 +41,7 @@ export async function POST(request: NextRequest) {
           { status: 400 },
         )
       } else {
-        open = open === 'true'
+        modifications = { ...modifications, open: open === 'true' }
       }
     }
 
@@ -53,33 +55,27 @@ export async function POST(request: NextRequest) {
           { status: 400 },
         )
       } else {
-        _public = _public === 'true'
+        modifications = { ...modifications, public: _public === 'true' }
       }
     }
 
-    if (description !== null) {
-      if (typeof description !== 'string') {
-        return Response.json(
-          { error: 'Given `description` is not a string.' },
-          { status: 400 },
-        )
-      }
+    if (typeof description === 'string') {
+      modifications = { ...modifications, description }
     }
 
     try {
-      const box = await prisma.box.create({
-        data: {
-          identifier,
-          name,
-          open: typeof open === 'boolean' ? open : undefined,
-          public: typeof _public === 'boolean' ? _public : undefined,
-        },
+      const newBox = await prisma.box.update({
+        where: {
+          id: id ?? undefined,
+          identifier: identifier ?? undefined,
+        } as Prisma.BoxWhereUniqueInput,
+        data: modifications,
         include: {
           questions: { select: { id: true }, orderBy: { createdAt: 'desc' } },
         },
       })
 
-      return Response.json(box, { status: 200 })
+      return Response.json(newBox, { status: 200 })
     } catch (error) {
       if ((error as any)?.code === 'P2002') {
         return Response.json(

@@ -14,10 +14,13 @@ datasource db {
 }
 
 model Box {
-  id         String     @id @unique @default(cuid())
-  identifier String     @unique
-  name       String?
-  questions  Question[]
+  id          String     @id @unique @default(cuid())
+  identifier  String     @unique
+  name        String
+  description String?    @map("descption")
+  open        Boolean    @default(true)
+  public      Boolean    @default(true)
+  questions   Question[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
