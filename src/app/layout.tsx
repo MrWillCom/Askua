@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { ThemeProvider } from 'next-themes'
 import { Theme } from '@radix-ui/themes'
-import { Toaster } from 'sonner'
+import Toaster from '@/components/Toaster'
 import Footer from '@/components/Footer'
 
 import 'modern-normalize/modern-normalize.css'
