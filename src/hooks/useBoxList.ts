@@ -1,6 +1,7 @@
 import useSWR from 'swr'
-import fetcher from '@/utils/fetcher'
+import { getFetcher } from '@/utils/fetcher'
 import { AxiosError } from 'axios'
+import useSecret from './useSecret'
 
 interface Box {
   id: string
@@ -9,15 +10,19 @@ interface Box {
   createdAt: string
   updatedAt: string
   questions: { id: string }[]
+  open: string
+  public: string
+  description?: string
 }
 
-function useBoxList() {
-  const { data, error, isLoading } = useSWR<Box[], AxiosError>(
+function useBoxList(args?: { admin?: boolean }) {
+  const [secret] = args?.admin ? useSecret() : [null]
+  const { data, error, isLoading, mutate } = useSWR<Box[], AxiosError>(
     '/api/v1/box/list',
-    fetcher,
+    getFetcher(secret ? { secret } : undefined),
   )
 
-  return { data, isLoading, error }
+  return { data, error, isLoading, mutate }
 }
 
 export default useBoxList
