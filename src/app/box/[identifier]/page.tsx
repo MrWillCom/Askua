@@ -22,6 +22,7 @@ import axios from 'axios'
 import { useState, useRef } from 'react'
 import { toast } from 'sonner'
 import Flow from '@/components/Flow'
+import AutoSpinnerView from '@/components/AutoSpinnerView'
 
 export default function Page({ params }: { params: { identifier: string } }) {
   const {
@@ -42,14 +43,11 @@ export default function Page({ params }: { params: { identifier: string } }) {
 
   return (
     <Container>
-      {useBoxError || useQuestionListError ? (
-        <Center>{(useBoxError || useQuestionListError)!.message}</Center>
-      ) : useBoxIsLoading || useQuestionListIsLoading ? (
-        <Center>
-          <Spinner />
-        </Center>
-      ) : (
-        <Flow>
+      <Flow>
+        <AutoSpinnerView
+          error={useBoxError || useQuestionListError}
+          isLoading={useBoxIsLoading || useQuestionListIsLoading}
+        >
           <Heading as="h1">{box?.name}</Heading>
           <Card {...cardProps}>
             <Inset clip="padding-box">
@@ -90,7 +88,7 @@ export default function Page({ params }: { params: { identifier: string } }) {
               </form>
             </Inset>
           </Card>
-          {questions!.map(q => (
+          {questions?.map(q => (
             <Card key={q.id} {...cardProps}>
               <Flex direction="column" gap="1">
                 <Text size="5" weight="medium">
@@ -113,8 +111,8 @@ export default function Page({ params }: { params: { identifier: string } }) {
               </Flex>
             </Card>
           ))}
-        </Flow>
-      )}
+        </AutoSpinnerView>
+      </Flow>
     </Container>
   )
 }

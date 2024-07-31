@@ -17,22 +17,17 @@ import NextLink from 'next/link'
 import useBoxList from '@/hooks/useBoxList'
 import cardProps from '@/props/cardProps'
 import Flow from '@/components/Flow'
+import AutoSpinnerView from '@/components/AutoSpinnerView'
 
 export default function Home() {
   const { data, error, isLoading } = useBoxList()
 
   return (
     <Container>
-      {error ? (
-        <Center>{error.message}</Center>
-      ) : isLoading ? (
-        <Center>
-          <Spinner />
-        </Center>
-      ) : (
-        <Flow>
-          <Heading as="h1">Boxes</Heading>
-          {data!.map(b => (
+      <Flow>
+        <Heading as="h1">Boxes</Heading>
+        <AutoSpinnerView error={error} isLoading={isLoading}>
+          {data?.map(b => (
             <Card key={b.id} {...cardProps}>
               <Flex justify="between" align="center">
                 <Flex align="center" gap="1">
@@ -49,8 +44,8 @@ export default function Home() {
               </Flex>
             </Card>
           ))}
-        </Flow>
-      )}
+        </AutoSpinnerView>
+      </Flow>
     </Container>
   )
 }
