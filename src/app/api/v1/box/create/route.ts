@@ -71,6 +71,7 @@ export async function POST(request: NextRequest) {
         data: {
           identifier,
           name,
+          description,
           open: typeof open === 'boolean' ? open : undefined,
           public: typeof _public === 'boolean' ? _public : undefined,
         },
