@@ -37,7 +37,7 @@ const QuestionList: React.FunctionComponent<QuestionListProps> = ({
   return data?.map(q => (
     <Card key={q.id} {...cardProps}>
       <Flex direction="column" gap="1">
-        <Text size="5" weight="medium">
+        <Text size="5" weight="medium" className={styles.preWrap}>
           {q.content}
         </Text>
         {q.reply ? (
