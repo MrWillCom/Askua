@@ -54,7 +54,9 @@ export default function Page({ params }: { params: { identifier: string } }) {
           isLoading={useBoxIsLoading || useQuestionListIsLoading}
         >
           <Heading as="h1">{box?.name}</Heading>
-          <Text color="gray">{box?.description}</Text>
+          <Text color="gray" className={styles.preWrap}>
+            {box?.description}
+          </Text>
           {box?.open ? (
             <Card {...cardProps}>
               <Inset clip="padding-box">
