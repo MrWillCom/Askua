@@ -4,7 +4,15 @@ import styles from './page.module.scss'
 
 import Container from '@/components/Container'
 import useQuestionList from '@/hooks/useQuestionList'
-import { Card, Flex, Heading, TextArea, Button, Inset } from '@radix-ui/themes'
+import {
+  Card,
+  Flex,
+  Heading,
+  TextArea,
+  Button,
+  Inset,
+  Text,
+} from '@radix-ui/themes'
 import useBox from '@/hooks/useBox'
 import cardProps from '@/props/cardProps'
 import axios from 'axios'
@@ -46,6 +54,7 @@ export default function Page({ params }: { params: { identifier: string } }) {
           isLoading={useBoxIsLoading || useQuestionListIsLoading}
         >
           <Heading as="h1">{box?.name}</Heading>
+          <Text color="gray">{box?.description}</Text>
           {box?.open ? (
             <Card {...cardProps}>
               <Inset clip="padding-box">

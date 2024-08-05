@@ -1,3 +1,5 @@
+import styles from './BoxList.module.scss'
+
 import type { Box } from '@/hooks/useBoxList'
 import cardProps from '@/props/cardProps'
 import {
@@ -51,7 +53,7 @@ const BoxList: React.FunctionComponent<BoxListProps> = ({ admin, data }) => {
             {!b.public ? <Badge color="gray">Private</Badge> : null}
           </Flex>
           {b.description ? (
-            <Text color="gray" size="2">
+            <Text color="gray" size="2" className={styles.preWrap}>
               {b.description}
             </Text>
           ) : null}
