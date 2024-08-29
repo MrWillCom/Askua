@@ -14,6 +14,13 @@ export async function POST(request: NextRequest) {
     )
   }
 
+  if (content.length <= 0 || content.length > 500) {
+    return Response.json(
+      { error: 'Given `content` is too long or empty.' },
+      { status: 400 },
+    )
+  }
+
   if (typeof boxId === 'string' ? !isCuid(boxId) : true) {
     return Response.json(
       { error: 'Given `boxId` is invalid.' },
@@ -30,7 +37,7 @@ export async function POST(request: NextRequest) {
       return Response.json({ error: 'The box is closed.' }, { status: 400 })
     } else {
       const question = await prisma.question.create({
-        data: { content, boxId: boxId as string },
+        data: { content, boxId: boxId as string, public: false },
         include: { box: true },
       })
 
